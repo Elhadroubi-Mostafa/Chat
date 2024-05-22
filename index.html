@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+  <script src="https://kit.fontawesome.com/c9da4db9ff.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="Chat.css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="btns">
+    <button class="name" id="john">John</button>
+    <button class="name" id="jane">Jane</button>
+  </div>
+  <div class="p-icon">
+    <p class="counter"></p>
+    <i class="fa-solid fa-message" id="icon"></i>
+  </div>
+  <div class="chat-container">
+    <p id="chatName">Jane chatting<span id="span1">.</span><span id="span2">.</span><span id="span3">.</span></p>
+    <div id="block-msg"></div>
+    <div class="input-btn">
+      <input type="text" id="msg">
+      <button id="send">send</button>
+    </div>
+    <button id="clearChat">Clear Chat</button>
+    
+  </div>
+
+  <script>
+    let name = document.querySelectorAll('.name');
+    let msg = document.getElementById('msg');
+    let send = document.getElementById('send');
+    let chat = document.querySelector('.chat-container');
+    let chatName = document.getElementById('chatName');
+    let msgNum = document.querySelector('.p-icon');
+    let counter = document.querySelector('.counter');
+    let blockMsg = document.querySelector('#block-msg');
+    let clear = document.querySelector('#clearChat');
+    let count = 0;
+    let up = 0;
+    let nom = '';
+    name.forEach((names, index) => {
+      
+      names.addEventListener('click', (ev) => {
+        if(index == 0){
+          name[1].classList.remove('color');
+          // msgNum.style.display = 'block';
+        }
+        else if(index == 1){
+          name[0].classList.remove('color');
+        }
+        names.classList.add('color');
+        nom = '';
+        nom = `${names.textContent}`;
+        count = 0;
+        // msgNum.innerHTML = '';
+        // console.log
+        console.log(count);
+        chatName.innerHTML = `${names.textContent} chatting...`;
+
+        msg.placeholder = `Type here, ${names.textContent}`;
+        console.log(names.textContent);
+      }) 
+    })
+    send.addEventListener('click', () => {
+        let p = document.createElement('p');
+        p.style.cssText = `background: orange; padding: 10px; font-size:14px;
+        border-radius: 10px; margin:5px;width: 96%;`;
+        p.id = 'para';
+        
+        let date = new Date();
+        p.innerHTML = `<b style= 'color: black'>${nom}</b><br>${msg.value}`;
+        let span = document.createElement('span');
+        span.innerHTML = `${date.getHours()}:${date.getMinutes()}`;
+        span.style.cssText = `display: flex; justify-content: end`;
+        p.appendChild(span);
+        
+        
+        blockMsg.appendChild(p);
+        let para = document.getElementById('para');
+        console.log(para.offsetHeight);
+        count++;
+        msg.value = '';
+        console.log(count);
+        if(nom == 'John'){
+          // msgNum.style.display = 'block';
+          counter.innerHTML = `${count}`;
+          msgNum.style.cssText = `position: absolute; top: 20px; left: 64%;`;
+        }
+        else if(nom == 'Jane'){
+          // msgNum.style.display = 'block';
+          counter.innerHTML = `${count}`;
+          msgNum.style.cssText = `top: 20px; left: 44%;`;
+        }
+        up+= 68;
+        if(up > 200){
+          // console.log(parseInt(blockMsg.style.height));
+          console.log(up);
+          requestAnimationFrame();
+          blockMsg.scrollTo += 68;
+        }
+    })
+
+    clear.addEventListener('click', () => {
+      blockMsg.innerHTML = '';
+    })
+    // msg.addEventListener('input', () => {
+    //   let span1 = document.getElementById('span1');
+    //   let span2 = document.getElementById('span2');
+    //   let span3 = document.getElementById('span3');
+
+    // })
+
+  </script>
+</body>
+</html>
